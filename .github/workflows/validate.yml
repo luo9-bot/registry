@@ -67,10 +67,7 @@ jobs:
                 echo "::error::插件 $name 版本[$i] 缺少 version"
                 ERRORS=$((ERRORS + 1))
               fi
-              if [ -z "$TAG" ]; then
-                echo "::error::插件 $name v$VER 缺少 tag"
-                ERRORS=$((ERRORS + 1))
-              fi
+              # tag 允许为空（workflow_dispatch 触发时可能无 release tag）
               if [ -z "$LINUX" ]; then
                 echo "::error::插件 $name v$VER 缺少 linux-x86_64 asset"
                 ERRORS=$((ERRORS + 1))
