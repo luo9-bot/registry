@@ -1,0 +1,20 @@
+{
+  "description": "AI 对话插件",
+  "repo": "luo9-bot/plugin_ai_chat",
+  "tags": [
+    "ai",
+    "chat"
+  ],
+  "config_files": [],
+  "versions": [
+    {
+      "version": "3.2.0",
+      "tag": "v3.2.0",
+      "sdk_version": "0.5.2",
+      "assets": {
+        "linux-x86_64": "libtop_drluo_luo9_ai_chat.so",
+        "windows-x86_64": "libtop_drluo_luo9_ai_chat.dll"
+      }
+    }
+  ]
+}
