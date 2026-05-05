@@ -59,5 +59,17 @@
       ]
     }
   },
-  "bot": null
+  "bot": {
+    "repo": "luoy-oss/luo9_bot",
+    "versions": [
+      {
+        "version": "0.1.0-beta.3",
+        "tag": "v0.1.0-beta.3",
+        "assets": {
+          "linux-x86_64": "luo9_bot",
+          "windows-x86_64": "luo9_bot.exe"
+        }
+      }
+    ]
+  }
 }
