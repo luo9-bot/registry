@@ -141,7 +141,7 @@ jobs:
 
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git remote set-url origin "https://x-access-token:${GH_TOKEN}@github.com/luo9-bot/registry.git"
+          git config --local http.https://github.com/.extraheader "AUTHORIZATION: basic $(echo -n "x-access-token:${GH_TOKEN}" | base64)"
           git checkout -b "$BRANCH"
           git add "$FILE"
           git commit -m "publish: ${NAME} v${VERSION}"
