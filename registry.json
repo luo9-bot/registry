@@ -3,7 +3,10 @@
     "ai_chat": {
       "description": "AI 对话插件 - 记忆/人格/情绪/主动对话系统",
       "repo": "luo9-bot/plugin_ai_chat",
-      "config_files": ["config.example.yaml", "prompts/"],
+      "config_files": [
+        "config.example.yaml",
+        "prompts/"
+      ],
       "versions": [
         {
           "version": "3.1.0",
@@ -43,6 +46,22 @@
           "sdk_version": "0.5.2",
           "assets": {
             "windows-x86_64": "plugin_doro.dll",
+            "linux-x86_64": "libplugin_doro.so"
+          }
+        }
+      ]
+    },
+    "plugin_doro": {
+      "description": "Doro 每日结局",
+      "repo": "luo9-bot/plugin_doro",
+      "config_files": [],
+      "versions": [
+        {
+          "version": "0.2.0",
+          "tag": "",
+          "sdk_version": "0.5.2",
+          "assets": {
+            "windows-x86_64": "libplugin_doro.dll",
             "linux-x86_64": "libplugin_doro.so"
           }
         }
