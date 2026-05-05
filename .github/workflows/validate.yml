@@ -68,6 +68,11 @@ jobs:
                 ERRORS=$((ERRORS + 1))
               fi
               # tag 允许为空（workflow_dispatch 触发时可能无 release tag）
+              SDK=$(echo "$ver" | jq -r '.sdk_version // empty')
+              if [ -z "$SDK" ]; then
+                echo "::error::插件 $name v$VER 缺少 sdk_version"
+                ERRORS=$((ERRORS + 1))
+              fi
               if [ -z "$LINUX" ]; then
                 echo "::error::插件 $name v$VER 缺少 linux-x86_64 asset"
                 ERRORS=$((ERRORS + 1))
