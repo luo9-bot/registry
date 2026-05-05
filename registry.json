@@ -50,7 +50,7 @@
     }
   },
   "bot": {
-    "repo": "luo9-bot/luo9_bot",
+    "repo": "luoy-oss/luo9_bot",
     "versions": [
       {
         "version": "0.1.0-beta.3",
