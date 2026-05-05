@@ -1,0 +1,176 @@
+# 注册表发布 workflow
+# 接收插件/bot 的 repository_dispatch 事件，自动更新对应文件并创建 PR
+# 事件类型：plugin-publish / bot-publish
+name: Publish
+
+on:
+  repository_dispatch:
+    types: [plugin-publish, bot-publish]
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    concurrency: registry-publish
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: 获取 App Token
+        id: app-token
+        uses: actions/create-github-app-token@v2
+        with:
+          app-id: ${{ secrets.APP_ID }}
+          private-key: ${{ secrets.APP_PRIVATE_KEY }}
+
+      - name: 处理插件发布
+        if: github.event.action == 'plugin-publish'
+        id: plugin
+        env:
+          EVENT: ${{ toJson(github.event.client_payload) }}
+        run: |
+          # 解析 client_payload
+          NAME=$(echo "$EVENT" | jq -r '.name')
+          VERSION=$(echo "$EVENT" | jq -r '.version')
+          DESCRIPTION=$(echo "$EVENT" | jq -r '.description // ""')
+          SDK_VERSION=$(echo "$EVENT" | jq -r '.sdk_version // "unknown"')
+          TAG=$(echo "$EVENT" | jq -r '.tag // ""')
+          REPO=$(echo "$EVENT" | jq -r '.repo')
+          ASSETS=$(echo "$EVENT" | jq -c '.assets // {}')
+          TAGS=$(echo "$EVENT" | jq -c '.tags // []')
+
+          [ -z "$DESCRIPTION" ] && DESCRIPTION="$NAME"
+          [ -z "$SDK_VERSION" ] && SDK_VERSION="unknown"
+
+          FILE="plugins/${NAME}.json"
+          BRANCH="publish-${NAME}-${VERSION}"
+
+          echo "name=$NAME" >> $GITHUB_OUTPUT
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "file=$FILE" >> $GITHUB_OUTPUT
+          echo "branch=$BRANCH" >> $GITHUB_OUTPUT
+
+          # 如果插件文件已存在，检查版本是否重复
+          if [ -f "$FILE" ]; then
+            EXISTS=$(jq --arg ver "$VERSION" '.versions | map(select(.version == $ver)) | length' "$FILE")
+            if [ "$EXISTS" -gt 0 ]; then
+              echo "版本 $VERSION 已存在，跳过"
+              echo "skip=true" >> $GITHUB_OUTPUT
+              exit 0
+            fi
+
+            # 在已有插件的 versions 数组头部插入新版本，更新 description/tags
+            jq --arg desc "$DESCRIPTION" --arg repo "$REPO" --arg sdk "$SDK_VERSION" \
+               --arg ver "$VERSION" --arg tag "$TAG" --argjson assets "$ASSETS" --argjson tags "$TAGS" \
+              '.description = $desc | .repo = $repo | .tags = $tags |
+               .versions = [{"version":$ver,"tag":$tag,"sdk_version":$sdk,"assets":$assets}] + .versions' \
+              "$FILE" > tmp.json
+            mv tmp.json "$FILE"
+            echo "action=updated" >> $GITHUB_OUTPUT
+          else
+            # 创建新插件文件
+            jq -n --arg name "$NAME" --arg desc "$DESCRIPTION" --arg repo "$REPO" \
+               --arg sdk "$SDK_VERSION" --arg ver "$VERSION" --arg tag "$TAG" \
+               --argjson assets "$ASSETS" --argjson tags "$TAGS" \
+              '{description:$desc,repo:$repo,tags:$tags,config_files:[],
+                versions:[{version:$ver,tag:$tag,sdk_version:$sdk,assets:$assets}]}' > "$FILE"
+            echo "action=added" >> $GITHUB_OUTPUT
+          fi
+
+          echo "skip=false" >> $GITHUB_OUTPUT
+
+      - name: 处理 Bot 发布
+        if: github.event.action == 'bot-publish'
+        id: bot
+        env:
+          EVENT: ${{ toJson(github.event.client_payload) }}
+        run: |
+          VERSION=$(echo "$EVENT" | jq -r '.version')
+          TAG=$(echo "$EVENT" | jq -r '.tag // ""')
+          REPO=$(echo "$EVENT" | jq -r '.repo')
+          ASSETS=$(echo "$EVENT" | jq -c '.assets // {}')
+
+          FILE="bot.json"
+          BRANCH="publish-bot-${VERSION}"
+
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "file=$FILE" >> $GITHUB_OUTPUT
+          echo "branch=$BRANCH" >> $GITHUB_OUTPUT
+
+          if [ -f "$FILE" ]; then
+            EXISTS=$(jq --arg ver "$VERSION" '.versions | map(select(.version == $ver)) | length' "$FILE")
+            if [ "$EXISTS" -gt 0 ]; then
+              echo "版本 $VERSION 已存在，跳过"
+              echo "skip=true" >> $GITHUB_OUTPUT
+              exit 0
+            fi
+
+            jq --arg repo "$REPO" --arg ver "$VERSION" --arg tag "$TAG" --argjson assets "$ASSETS" \
+              '.repo = $repo | .versions = [{"version":$ver,"tag":$tag,"assets":$assets}] + .versions' \
+              "$FILE" > tmp.json
+            mv tmp.json "$FILE"
+            echo "action=updated" >> $GITHUB_OUTPUT
+          else
+            jq -n --arg repo "$REPO" --arg ver "$VERSION" --arg tag "$TAG" --argjson assets "$ASSETS" \
+              '{repo:$repo,versions:[{version:$ver,tag:$tag,assets:$assets}]}' > "$FILE"
+            echo "action=added" >> $GITHUB_OUTPUT
+          fi
+
+          echo "skip=false" >> $GITHUB_OUTPUT
+
+      - name: 创建 PR
+        if: |
+          (github.event.action == 'plugin-publish' && steps.plugin.outputs.skip != 'true') ||
+          (github.event.action == 'bot-publish' && steps.bot.outputs.skip != 'true')
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+        run: |
+          # 确定变量（根据事件类型）
+          if [ "${{ github.event.action }}" = "plugin-publish" ]; then
+            FILE="${{ steps.plugin.outputs.file }}"
+            BRANCH="${{ steps.plugin.outputs.branch }}"
+            NAME="${{ steps.plugin.outputs.name }}"
+            VERSION="${{ steps.plugin.outputs.version }}"
+            ACTION="${{ steps.plugin.outputs.action }}"
+          else
+            FILE="${{ steps.bot.outputs.file }}"
+            BRANCH="${{ steps.bot.outputs.branch }}"
+            NAME="bot"
+            VERSION="${{ steps.bot.outputs.version }}"
+            ACTION="${{ steps.bot.outputs.action }}"
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git checkout -b "$BRANCH"
+          git add "$FILE"
+          git commit -m "publish: ${NAME} v${VERSION}"
+          git push origin "$BRANCH"
+
+          if [ "$ACTION" = "added" ]; then
+            if [ "${{ github.event.action }}" = "plugin-publish" ]; then
+              TITLE="publish: 新插件 ${NAME} v${VERSION}"
+              BODY="## 新插件注册
+
+          | 字段 | 值 |
+          |------|------|
+          | 插件 | \`${NAME}\` |
+          | 版本 | v${VERSION} |
+          | 说明 | $(jq -r '.description' "$FILE") |
+          | SDK | v$(jq -r '.versions[0].sdk_version' "$FILE") |
+          | 仓库 | [${{ github.event.client_payload.repo }}](https://github.com/${{ github.event.client_payload.repo }}) |
+          "
+            else
+              TITLE="publish: Bot v${VERSION}"
+              BODY="## Bot 更新\n\n版本: v${VERSION}"
+            fi
+          else
+            TITLE="publish: ${NAME} v${VERSION}"
+            BODY="## 更新\n\n版本: v${VERSION}"
+          fi
+
+          gh pr create \
+            --repo luo9-bot/registry \
+            --head "$BRANCH" \
+            --base main \
+            --title "$TITLE" \
+            --body "$BODY"

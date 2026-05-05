@@ -1,0 +1,60 @@
+# 注册表合并 workflow
+# 当 plugins/ 或 bot.json 变更时，自动合并生成 registry.json
+name: Merge Registry
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'plugins/**'
+      - 'bot.json'
+
+jobs:
+  merge:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: 合并生成 registry.json
+        run: |
+          # 初始化空结构
+          echo '{"plugins":{},"bot":null}' > registry.json
+
+          # 合并所有插件文件
+          for f in plugins/*.json; do
+            [ -f "$f" ] || continue
+            NAME=$(basename "$f" .json)
+            PLUGIN_DATA=$(cat "$f")
+            jq --arg name "$NAME" --argjson data "$PLUGIN_DATA" \
+              '.plugins[$name] = $data' registry.json > tmp.json
+            mv tmp.json registry.json
+          done
+
+          # 合并 bot.json
+          if [ -f bot.json ]; then
+            BOT_DATA=$(cat bot.json)
+            jq --argjson bot "$BOT_DATA" '.bot = $bot' registry.json > tmp.json
+            mv tmp.json registry.json
+          fi
+
+          # 验证 JSON
+          jq empty registry.json
+          echo "合并完成，插件数量: $(jq '.plugins | length' registry.json)"
+
+      - name: 提交变更
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          # 检查是否有变更
+          if git diff --quiet registry.json; then
+            echo "registry.json 无变更，跳过"
+            exit 0
+          fi
+
+          git add registry.json
+          git commit -m "chore: 自动生成 registry.json"
+          git push
