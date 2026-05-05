@@ -1,17 +1,17 @@
 {
   "plugins": {
-    "plugin_doro": {
-      "description": "Doro 每日结局",
-      "repo": "luo9-bot/plugin_doro",
+    "top_drluo_luo9_ai_chat": {
+      "description": "AI 对话插件",
+      "repo": "luo9-bot/plugin_ai_chat",
       "config_files": [],
       "versions": [
         {
-          "version": "0.2.0",
+          "version": "3.2.0",
           "tag": "",
           "sdk_version": "0.5.2",
           "assets": {
-            "windows-x86_64": "libplugin_doro.dll",
-            "linux-x86_64": "libplugin_doro.so"
+            "windows-x86_64": "libtop_drluo_luo9_ai_chat.dll",
+            "linux-x86_64": "libtop_drluo_luo9_ai_chat.so"
           }
         }
       ]
