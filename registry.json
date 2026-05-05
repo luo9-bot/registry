@@ -18,6 +18,25 @@
           }
         }
       ]
+    },
+    "plugin_epic": {
+      "description": "Epic Games 免费游戏查询与提醒",
+      "repo": "luo9-bot/plugin_epic",
+      "tags": [
+        "game"
+      ],
+      "config_files": [],
+      "versions": [
+        {
+          "version": "0.3.0",
+          "tag": "v0.3.0",
+          "sdk_version": "0.5.2",
+          "assets": {
+            "linux-x86_64": "libplugin_epic.so",
+            "windows-x86_64": "libplugin_epic.dll"
+          }
+        }
+      ]
     }
   },
   "bot": null
