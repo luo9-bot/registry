@@ -1,1 +1,24 @@
-{"plugins":{},"bot":null}
+{
+  "plugins": {
+    "plugin_doro": {
+      "description": "Doro 每日结局",
+      "repo": "luo9-bot/plugin_doro",
+      "tags": [
+        "daily"
+      ],
+      "config_files": [],
+      "versions": [
+        {
+          "version": "0.2.0",
+          "tag": "v0.2.0",
+          "sdk_version": "0.5.2",
+          "assets": {
+            "linux-x86_64": "libplugin_doro.so",
+            "windows-x86_64": "libplugin_doro.dll"
+          }
+        }
+      ]
+    }
+  },
+  "bot": null
+}
