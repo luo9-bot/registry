@@ -29,7 +29,7 @@
           "tag": "v1.0.0",
           "sdk_version": "0.5.2",
           "assets": {
-            "windows-x86_64": "lib<crate_name>.dll",
+            "windows-x86_64": "<crate_name>.dll",
             "linux-x86_64": "lib<crate_name>.so"
           }
         }

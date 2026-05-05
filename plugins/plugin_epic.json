@@ -12,7 +12,7 @@
       "sdk_version": "0.5.2",
       "assets": {
         "linux-x86_64": "libplugin_epic.so",
-        "windows-x86_64": "libplugin_epic.dll"
+        "windows-x86_64": "plugin_epic.dll"
       }
     }
   ]

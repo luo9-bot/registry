@@ -12,7 +12,7 @@
       "sdk_version": "0.5.2",
       "assets": {
         "linux-x86_64": "libplugin_doro.so",
-        "windows-x86_64": "libplugin_doro.dll"
+        "windows-x86_64": "plugin_doro.dll"
       }
     }
   ]
