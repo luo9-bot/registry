@@ -16,6 +16,15 @@
             "linux-x86_64": "libplugin_doro.so",
             "windows-x86_64": "plugin_doro.dll"
           }
+        },
+        {
+          "version": "0.2.0",
+          "tag": "v0.2.0",
+          "sdk_version": "0.5.2",
+          "assets": {
+            "linux-x86_64": "libplugin_doro.so",
+            "windows-x86_64": "plugin_doro.dll"
+          }
         }
       ]
     },
@@ -31,6 +40,15 @@
           "version": "0.3.1",
           "tag": "v0.3.1",
           "sdk_version": "0.6.0",
+          "assets": {
+            "linux-x86_64": "libplugin_epic.so",
+            "windows-x86_64": "plugin_epic.dll"
+          }
+        },
+        {
+          "version": "0.3.0",
+          "tag": "v0.3.0",
+          "sdk_version": "0.5.2",
           "assets": {
             "linux-x86_64": "libplugin_epic.so",
             "windows-x86_64": "plugin_epic.dll"
@@ -55,6 +73,24 @@
             "linux-x86_64": "libtop_drluo_luo9_ai_chat.so",
             "windows-x86_64": "top_drluo_luo9_ai_chat.dll"
           }
+        },
+        {
+          "version": "3.2.1",
+          "tag": "v3.2.1",
+          "sdk_version": "0.6.0",
+          "assets": {
+            "linux-x86_64": "libtop_drluo_luo9_ai_chat.so",
+            "windows-x86_64": "top_drluo_luo9_ai_chat.dll"
+          }
+        },
+        {
+          "version": "3.2.0",
+          "tag": "v3.2.0",
+          "sdk_version": "0.5.2",
+          "assets": {
+            "linux-x86_64": "libtop_drluo_luo9_ai_chat.so",
+            "windows-x86_64": "top_drluo_luo9_ai_chat.dll"
+          }
         }
       ]
     }
@@ -63,8 +99,24 @@
     "repo": "luoy-oss/luo9_bot",
     "versions": [
       {
+        "version": "0.1.0-beta.6",
+        "tag": "v0.1.0-beta.6",
+        "assets": {
+          "linux-x86_64": "luo9_bot",
+          "windows-x86_64": "luo9_bot.exe"
+        }
+      },
+      {
         "version": "0.1.0-beta.4",
         "tag": "v0.1.0-beta.4",
+        "assets": {
+          "linux-x86_64": "luo9_bot",
+          "windows-x86_64": "luo9_bot.exe"
+        }
+      },
+      {
+        "version": "0.1.0-beta.3",
+        "tag": "v0.1.0-beta.3",
         "assets": {
           "linux-x86_64": "luo9_bot",
           "windows-x86_64": "luo9_bot.exe"
