@@ -2,6 +2,14 @@
   "repo": "luoy-oss/luo9_bot",
   "versions": [
     {
+      "version": "0.1.0-beta.6",
+      "tag": "v0.1.0-beta.6",
+      "assets": {
+        "linux-x86_64": "luo9_bot",
+        "windows-x86_64": "luo9_bot.exe"
+      }
+    },
+    {
       "version": "0.1.0-beta.4",
       "tag": "v0.1.0-beta.4",
       "assets": {
