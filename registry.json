@@ -10,6 +10,15 @@
       "config_files": [],
       "versions": [
         {
+          "version": "4.0.1",
+          "tag": "v4.0.1",
+          "sdk_version": "0.6.0",
+          "assets": {
+            "linux-x86_64": "libplugin_ai_chat.so",
+            "windows-x86_64": "plugin_ai_chat.dll"
+          }
+        },
+        {
           "version": "4.0.0",
           "tag": "v4.0.0",
           "sdk_version": "0.6.0",
