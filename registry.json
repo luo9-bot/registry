@@ -112,6 +112,25 @@
         }
       ]
     },
+    "plugin_group_welcome": {
+      "description": "进群欢迎插件",
+      "repo": "luo9-bot/plugin_group_welcome",
+      "tags": [
+        "group"
+      ],
+      "config_files": [],
+      "versions": [
+        {
+          "version": "0.1.0",
+          "tag": "v0.1.0",
+          "sdk_version": "0.6.0",
+          "assets": {
+            "linux-x86_64": "libplugin_group_welcome.so",
+            "windows-x86_64": "plugin_group_welcome.dll"
+          }
+        }
+      ]
+    },
     "plugin_potato_live": {
       "description": "bilibili直播检测: 土豆，今天直播了没?",
       "repo": "luo9-bot/plugin_potato_live",
