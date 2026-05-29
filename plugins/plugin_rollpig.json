@@ -1,0 +1,20 @@
+{
+  "description": "随机猪猪图 - 从 api 获取随机猪猪图片",
+  "repo": "luo9-bot/plugin_rollpig",
+  "tags": [
+    "pigpig",
+    "image"
+  ],
+  "config_files": [],
+  "versions": [
+    {
+      "version": "0.1.0",
+      "tag": "v0.1.0",
+      "sdk_version": "0.7.1",
+      "assets": {
+        "linux-x86_64": "libplugin_rollpig.so",
+        "windows-x86_64": "plugin_rollpig.dll"
+      }
+    }
+  ]
+}
