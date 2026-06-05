@@ -141,6 +141,15 @@
       "config_files": [],
       "versions": [
         {
+          "version": "0.1.7",
+          "tag": "v0.1.7",
+          "sdk_version": "0.6.0",
+          "assets": {
+            "linux-x86_64": "libplugin_potato_live.so",
+            "windows-x86_64": "plugin_potato_live.dll"
+          }
+        },
+        {
           "version": "0.1.6",
           "tag": "v0.1.6",
           "sdk_version": "0.6.0",
