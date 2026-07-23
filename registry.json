@@ -10,6 +10,24 @@
       "config_files": [],
       "versions": [
         {
+          "version": "5.2.0",
+          "tag": "v5.2.0",
+          "sdk_version": "0.7.1",
+          "assets": {
+            "linux-x86_64": "libplugin_ai_chat.so",
+            "windows-x86_64": "plugin_ai_chat.dll"
+          }
+        },
+        {
+          "version": "5.1.0",
+          "tag": "v5.1.0",
+          "sdk_version": "0.6.0",
+          "assets": {
+            "linux-x86_64": "libplugin_ai_chat.so",
+            "windows-x86_64": "plugin_ai_chat.dll"
+          }
+        },
+        {
           "version": "5.0.0",
           "tag": "v5.0.0",
           "sdk_version": "0.6.0",
@@ -99,6 +117,128 @@
           "assets": {
             "linux-x86_64": "libplugin_epic.so",
             "windows-x86_64": "plugin_epic.dll"
+          }
+        }
+      ]
+    },
+    "plugin_group_welcome": {
+      "description": "进群欢迎插件",
+      "repo": "luo9-bot/plugin_group_welcome",
+      "tags": [
+        "group"
+      ],
+      "config_files": [],
+      "versions": [
+        {
+          "version": "0.1.0",
+          "tag": "v0.1.0",
+          "sdk_version": "0.6.0",
+          "assets": {
+            "linux-x86_64": "libplugin_group_welcome.so",
+            "windows-x86_64": "plugin_group_welcome.dll"
+          }
+        }
+      ]
+    },
+    "plugin_potato_live": {
+      "description": "bilibili直播检测: 土豆，今天直播了没?",
+      "repo": "luo9-bot/plugin_potato_live",
+      "tags": [
+        "potato",
+        "bilibili"
+      ],
+      "config_files": [],
+      "versions": [
+        {
+          "version": "0.1.7",
+          "tag": "v0.1.7",
+          "sdk_version": "0.6.0",
+          "assets": {
+            "linux-x86_64": "libplugin_potato_live.so",
+            "windows-x86_64": "plugin_potato_live.dll"
+          }
+        },
+        {
+          "version": "0.1.6",
+          "tag": "v0.1.6",
+          "sdk_version": "0.6.0",
+          "assets": {
+            "linux-x86_64": "libplugin_potato_live.so",
+            "windows-x86_64": "plugin_potato_live.dll"
+          }
+        },
+        {
+          "version": "0.1.5",
+          "tag": "v0.1.5",
+          "sdk_version": "0.6.0",
+          "assets": {
+            "linux-x86_64": "libplugin_potato_live.so",
+            "windows-x86_64": "plugin_potato_live.dll"
+          }
+        },
+        {
+          "version": "0.1.4",
+          "tag": "v0.1.4",
+          "sdk_version": "0.6.0",
+          "assets": {
+            "linux-x86_64": "libplugin_potato_live.so",
+            "windows-x86_64": "plugin_potato_live.dll"
+          }
+        },
+        {
+          "version": "0.1.3",
+          "tag": "v0.1.3",
+          "sdk_version": "0.6.0",
+          "assets": {
+            "linux-x86_64": "libplugin_potato_live.so",
+            "windows-x86_64": "plugin_potato_live.dll"
+          }
+        },
+        {
+          "version": "0.1.2",
+          "tag": "v0.1.2",
+          "sdk_version": "0.6.0",
+          "assets": {
+            "linux-x86_64": "libplugin_potato_live.so",
+            "windows-x86_64": "plugin_potato_live.dll"
+          }
+        },
+        {
+          "version": "0.1.1",
+          "tag": "v0.1.1",
+          "sdk_version": "0.6.0",
+          "assets": {
+            "linux-x86_64": "libplugin_potato_live.so",
+            "windows-x86_64": "plugin_potato_live.dll"
+          }
+        },
+        {
+          "version": "0.1.0",
+          "tag": "v0.1.0",
+          "sdk_version": "0.6.0",
+          "assets": {
+            "linux-x86_64": "libplugin_potato_live.so",
+            "windows-x86_64": "plugin_potato_live.dll"
+          }
+        }
+      ]
+    },
+    "plugin_rollpig": {
+      "description": "随机猪猪图 - 从 api 获取随机猪猪图片",
+      "repo": "luo9-bot/plugin_rollpig",
+      "tags": [
+        "pigpig",
+        "image"
+      ],
+      "config_files": [],
+      "versions": [
+        {
+          "version": "0.1.0",
+          "tag": "v0.1.0",
+          "sdk_version": "0.7.1",
+          "assets": {
+            "linux-x86_64": "libplugin_rollpig.so",
+            "windows-x86_64": "plugin_rollpig.dll"
           }
         }
       ]
