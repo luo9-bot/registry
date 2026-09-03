@@ -12,15 +12,18 @@ jobs:
     runs-on: ubuntu-latest
     concurrency: registry-publish
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
       - name: 获取 App Token
         id: app-token
         uses: actions/create-github-app-token@v2
         with:
           app-id: ${{ secrets.APP_ID }}
           private-key: ${{ secrets.APP_PRIVATE_KEY }}
+
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          # 由 checkout 写入认证头（内部正确编码、单行），后续 git push 直接复用
+          token: ${{ steps.app-token.outputs.token }}
 
       - name: 处理插件发布
         if: github.event.action == 'plugin-publish'
@@ -141,11 +144,23 @@ jobs:
 
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git config --local http.https://github.com/.extraheader "AUTHORIZATION: basic $(echo -n "x-access-token:${GH_TOKEN}" | base64)"
+          # 强制 HTTP/1.1，规避托管 runner 上偶发的 "Failed sending HTTP request"
+          git config --local http.version HTTP/1.1
           git checkout -b "$BRANCH"
           git add "$FILE"
           git commit -m "publish: ${NAME} v${VERSION}"
-          git push origin "$BRANCH"
+
+          # 推送失败（偶发网络问题）时自动重试
+          PUSH_OK=false
+          for ATTEMPT in 1 2 3; do
+            if git push origin "$BRANCH"; then
+              PUSH_OK=true
+              break
+            fi
+            echo "推送失败（第 ${ATTEMPT}/3 次），5 秒后重试"
+            sleep 5
+          done
+          [ "$PUSH_OK" = "true" ] || exit 1
 
           if [ "$ACTION" = "added" ]; then
             if [ "${{ github.event.action }}" = "plugin-publish" ]; then
