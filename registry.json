@@ -7,6 +7,15 @@
       "config_files": [],
       "versions": [
         {
+          "version": "1.1.6",
+          "tag": "v1.1.6",
+          "sdk_version": "0.7.1",
+          "assets": {
+            "linux-x86_64": "libluo_realm.so",
+            "windows-x86_64": "luo_realm.dll"
+          }
+        },
+        {
           "version": "1.1.5",
           "tag": "v1.1.5",
           "sdk_version": "0.7.1",
