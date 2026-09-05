@@ -72,6 +72,15 @@
       "config_files": [],
       "versions": [
         {
+          "version": "5.2.1",
+          "tag": "v5.2.1",
+          "sdk_version": "0.7.1",
+          "assets": {
+            "linux-x86_64": "libplugin_ai_chat.so",
+            "windows-x86_64": "plugin_ai_chat.dll"
+          }
+        },
+        {
           "version": "5.2.0",
           "tag": "v5.2.0",
           "sdk_version": "0.7.1",
